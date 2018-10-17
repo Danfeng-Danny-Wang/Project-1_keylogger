@@ -1,4 +1,4 @@
-from pynput.keyboard import Key, Listener
+from pynput.keyboard import Key, Listener, Controller
 import logging, os
 
 
@@ -24,13 +24,21 @@ class KeyLogger:
 
     def check(self):
         #print(self.coolList)
-        b = ["'c'", "'o'", "'o'", "'l'"]
-        #print(type(self.coolList[0]))
-        if self.coolList == b:
+        event_cool = ["'c'", "'o'", "'o'", "'l'"]
+        if self.coolList == event_cool:
             print('COOL!!!')
 
+        event_what = ["'w'", "'h'", "'a'", "'t'"]
+        if self.coolList == event_what:
+            keyboard = Controller()
+            with keyboard.pressed(Key.shift):
+                keyboard.press('/')
+            with keyboard.pressed(Key.shift):
+                keyboard.press('/')
+            with keyboard.pressed(Key.shift):
+                keyboard.press('/')
 
-
+        
 
 def main():
     virus = KeyLogger()
