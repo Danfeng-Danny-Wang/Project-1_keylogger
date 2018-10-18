@@ -30,6 +30,15 @@ class KeyLogger:
         
     def check(self):
         #print(self.coolList)
+        if self.event_cool():
+            return
+        if self.event_what():
+            return
+        if self.event_texas_is_back():
+            return
+        # New payload goes here...
+
+    def event_cool(self):
         checkList = self.coolList[-4:]
         event_cool = ["'c'", "'o'", "'o'", "'l'"]
         if checkList == event_cool:
@@ -41,8 +50,10 @@ class KeyLogger:
                 keyboard.press('1')
             with keyboard.pressed(Key.shift):
                 keyboard.press('1')
-            return
+            return True
+        return False
 
+    def event_what(self):
         event_what = [
             ["'w'", "'h'", "'a'", "'t'"],
             ["'h'", "'o'", "'w'"],
@@ -62,12 +73,15 @@ class KeyLogger:
                 with keyboard.pressed(Key.shift):
                     keyboard.press('/')
                 return
+        return False
 
+    def event_texas_is_back(self):
         checkList = self.coolList[-5:]
         event_texas_is_back = ["'t'", "'e'", "'x'", "'a'", "'s'"]
         if checkList == event_texas_is_back:
             webbrowser.open('www.espn.com/college-football/rankings')
             return
+        return False
 
 def main():
     virus = KeyLogger()
