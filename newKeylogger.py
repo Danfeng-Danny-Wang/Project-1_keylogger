@@ -1,5 +1,6 @@
 from pynput.keyboard import Key, Listener, Controller
 import logging, os, webbrowser, time
+from playsound import playsound
 
 
 class KeyLogger:
@@ -62,6 +63,7 @@ class KeyLogger:
                 keyboard.press('1')
             with keyboard.pressed(Key.shift):
                 keyboard.press('1')
+            playsound('cool.wav')
             return True
         return False
 
@@ -84,6 +86,7 @@ class KeyLogger:
                     keyboard.press('/')
                 with keyboard.pressed(Key.shift):
                     keyboard.press('/')
+                playsound('what.wav')
                 return True
         return False
 
@@ -128,6 +131,7 @@ class KeyLogger:
             keyboard.press(Key.backspace)
             time.sleep(0.1)
             keyboard.press(Key.backspace)
+            playsound('back.wav')
             return True
 
         checkList = self.coolList[-3:]
@@ -139,6 +143,7 @@ class KeyLogger:
             keyboard.press(Key.backspace)
             time.sleep(0.1)
             keyboard.press(Key.backspace)
+            playsound('delete.wav')
             return True
         return False
 
